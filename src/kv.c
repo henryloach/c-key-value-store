@@ -26,9 +26,9 @@ char* kv_get(kv_t* db, char* key) {
 
         kv_entry_t entry = db->entries[real_idx];
 
-        if (entry.key == (void*)TOMBSTONE) continue;
         if (entry.key == NULL) return NULL;
-        return entry.value;
+        if (entry.key != NULL && entry.key != (void*)TOMBSTONE) return entry.value;
+        if (entry.key == (void*)TOMBSTONE) continue;
     }
 
     return NULL;
