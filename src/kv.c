@@ -21,7 +21,7 @@ char* kv_get(kv_t* db, char* key) {
 
     size_t idx = hash(key, db->capacity);
 
-    for (int i = 0; i < db->capacity; i++) {
+    for (int i = 0; i < db->capacity - 1; i++) {
         size_t real_idx = (idx + i) % db->capacity;
 
         kv_entry_t* entry = &db->entries[real_idx];
@@ -94,8 +94,9 @@ kv_t* kv_init(size_t capacity) {
     table->capacity = capacity;
     table->count = 0;
 
-    table->entries = calloc(sizeof(kv_entry_t), capacity);
+    table->entries = calloc(capacity, sizeof(kv_entry_t));
     if (table->entries == NULL) {
+        free(table);
         return NULL;
     }
 
