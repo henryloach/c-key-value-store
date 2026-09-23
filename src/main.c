@@ -19,4 +19,7 @@ int main() {
             printf("%d - %s: %s\n", i, entry.key, entry.value);
         }
     }
+
+    char* gotString = kv_get(table, "here");
+    printf("%s\n", gotString);
 }
