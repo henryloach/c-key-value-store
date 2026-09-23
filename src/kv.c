@@ -16,6 +16,27 @@ size_t hash(char* val, int capacity) {
     return hash % capacity;
 }
 
+int kv_delete(kv_t* db, char* key) {
+    if (!db || !key) return -1;
+
+    size_t idx = hash(key, db->capacity);
+
+    for (int i = 0; i < db->capacity; i++) {
+        size_t real_idx = (idx + i) % db->capacity;
+
+        kv_entry_t* entry = &db->entries[real_idx];
+
+        if (entry->key == NULL) return -1;
+        if (entry->key == TOMBSTONE) continue;
+        if (!strcmp(entry->key, key)) {
+            entry->key = TOMBSTONE;
+            db->count -= 1;
+        }
+    }
+
+    return -1;
+}
+
 char* kv_get(kv_t* db, char* key) {
     if (!db || !key) return NULL;
 
