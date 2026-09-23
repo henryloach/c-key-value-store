@@ -26,9 +26,9 @@ char* kv_get(kv_t* db, char* key) {
 
         kv_entry_t entry = db->entries[real_idx];
 
-        if (entry.key == NULL || entry.key == TOMBSTONE) return NULL;
         if (!strcmp(entry.key, key)) return entry.value;
-        if (strcmp(entry.key, key)) continue;
+        if (strcmp(entry.key, key) && entry.key == TOMBSTONE) continue;
+        if (entry.key == NULL || entry.key == TOMBSTONE) return NULL;
     }
 
     return NULL;
@@ -46,7 +46,7 @@ int kv_put(kv_t* db, char* key, char* value) {
         kv_entry_t* entry = &db->entries[real_idx];
 
         // place in empty
-        if (!entry->key || entry->key == (void*)TOMBSTONE) {
+        if (!entry->key || entry->key == TOMBSTONE) {
             char* newkey = strdup(key);
             char* newval = strdup(value);
             if (!newval || !newkey) {
@@ -62,7 +62,7 @@ int kv_put(kv_t* db, char* key, char* value) {
         }
 
         // append
-        if (entry->key && entry->key != (void*)TOMBSTONE || !strcmp(entry->key, key)) {
+        if (entry->key && entry->key != TOMBSTONE || !strcmp(entry->key, key)) {
             char* newval = strdup(value);
             if (!newval) return -1;
             entry->value = newval;
