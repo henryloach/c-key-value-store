@@ -67,7 +67,7 @@ int kv_put(kv_t* db, char* key, char* value) {
         }
 
         // append
-        if (entry->key && entry->key != TOMBSTONE || !strcmp(entry->key, key)) {
+        if (entry->key && (entry->key != TOMBSTONE || !strcmp(entry->key, key))) {
             char* newval = strdup(value);
             if (!newval) return -1;
             entry->value = newval;
