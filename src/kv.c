@@ -28,7 +28,7 @@ char* kv_get(kv_t* db, char* key) {
 
         if (entry.key == TOMBSTONE ) continue;
         if (entry.key == NULL) return NULL;
-        return entry.value;
+        if (entry.key != NULL && entry.key != TOMBSTONE) return entry.value;
     }
 
     return NULL;
