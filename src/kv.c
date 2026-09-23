@@ -31,6 +31,7 @@ int kv_delete(kv_t* db, char* key) {
         if (!strcmp(entry->key, key)) {
             entry->key = TOMBSTONE;
             db->count -= 1;
+            return 0;
         }
     }
 
