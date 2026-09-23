@@ -24,11 +24,11 @@ char* kv_get(kv_t* db, char* key) {
     for (int i = 0; i < db->capacity; i++) {
         size_t real_idx = (idx + i) % db->capacity;
 
-        kv_entry_t entry = db->entries[real_idx];
+        kv_entry_t* entry = &db->entries[real_idx];
 
-        if (entry.key == NULL) return NULL;
-        if (entry.key == TOMBSTONE ) continue;
-        if (!strcmp(entry.key, key)) return entry.value;
+        if (entry->key == NULL) return NULL;
+        if (entry->key == TOMBSTONE ) continue;
+        if (!strcmp(entry->key, key)) return entry->value;
     }
 
     return NULL;
