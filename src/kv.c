@@ -28,7 +28,7 @@ char* kv_get(kv_t* db, char* key) {
 
         if (entry->key == NULL) return NULL;
         if (!strcmp(entry->key, key)) return entry->value;
-        if (entry->key == TOMBSTONE ) continue;
+        //if (entry->key == TOMBSTONE ) continue;
     }
 
     return NULL;
