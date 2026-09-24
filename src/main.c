@@ -14,6 +14,7 @@ int main() {
 
     kv_put(table, "here", "I am");
     kv_put(table, "here", "You are");
+    kv_put(table, "there", "We are");
 
     for (int i = 0; i < table->capacity; i++) {
         kv_entry_t entry = table->entries[i];
@@ -30,4 +31,7 @@ int main() {
     kv_put(db, "name", "alice");
     assert(strcmp(kv_get(db, "name"), "alice") == 0);
     assert(kv_get(db, "missing") == NULL);
+
+    kv_free(db);
+    kv_free(table);
 }
