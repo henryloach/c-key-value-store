@@ -137,5 +137,7 @@ void kv_free(kv_t* db) {
     }
 
     free(db->entries);
+    db->entries = NULL;
     free(db);
+    db = NULL;
 }
