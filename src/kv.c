@@ -29,7 +29,10 @@ int kv_delete(kv_t* db, char* key) {
         if (entry->key == NULL) return -1;
         if (entry->key == TOMBSTONE) continue;
         if (!strcmp(entry->key, key)) {
+            free(entry->key);
+            free(entry->value);
             entry->key = TOMBSTONE;
+            entry->value = NULL;
             db->count -= 1;
             return 0;
         }
