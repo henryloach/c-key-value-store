@@ -124,6 +124,8 @@ kv_t* kv_init(size_t capacity) {
 }
 
 void kv_free(kv_t* db) {
+    if (!db) return NULL;
+
     for (int i = 0; i < db->capacity; i++) {
         kv_entry_t* entry = &db->entries[i];
 
